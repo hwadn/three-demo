@@ -4,7 +4,7 @@ import { TextGeometry } from 'three/addons/geometries/TextGeometry.js'
 export const createText = (text, font) => {
 	const geometry = new TextGeometry(text, {
 		font,
-		size: 2,
+		size: 20,
 		height: 0.2,
 		curveSegments: 12,
 		bevelEnabled: true,
