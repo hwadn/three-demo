@@ -28,7 +28,8 @@ renderer.setSize(window.innerWidth, window.innerHeight)
 document.body.appendChild(renderer.domElement)
 
 // 添加控制器
-const controls = new OrbitControls( camera, renderer.domElement );
+const controls = new OrbitControls(camera, renderer.domElement)
+controls.enableDamping = true
 controls.update();
 
 // 动画
@@ -49,6 +50,23 @@ const animate = (time) => {
 }
 
 animate()
+
+// 自适应屏幕
+window.addEventListener('resize', () => {
+	camera.aspect = window.innerWidth / window.innerHeight
+	camera.updateProjectionMatrix()
+	renderer.setSize(window.innerWidth, window.innerHeight)
+	renderer.setPixelRatio(window.devicePixelRatio)
+})
+// 双击全屏
+window.addEventListener('dblclick', () => {
+	const fullScreenElement = document.fullscreenElement
+	if (fullScreenElement) {
+		document.exitFullscreen()
+	} else {
+		renderer.domElement.requestFullscreen()
+	}
+})
 
 // 灯光
 const light = new THREE.AmbientLight(0xffffff)
