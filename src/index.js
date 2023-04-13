@@ -78,7 +78,7 @@ fontLoader.load(
 	'node_modules/three/examples/fonts/droid/droid_sans_regular.typeface.json',
 	// called when the font has loaded
 	(font) => {
-		const textMesh = createText('chd three.js', font)
+		const textMesh = createText('my three.js demo', font)
 		textMesh.position.set(50, 300, 0)
 		scene.add(textMesh)
 	}
