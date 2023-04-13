@@ -4,8 +4,9 @@
 name: Node.js Package
 
 on:
-  release:
-    types: [created]
+  push:
+    branches:
+      - master
 
 jobs:
   build:
@@ -17,19 +18,10 @@ jobs:
           node-version: 16
       - run: yarn
       - run: yarn build
-
-  publish-gpr:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Deploy
+        uses: crazy-max/ghaction-github-pages@v1
         with:
-          node-version: 16
-          registry-url: https://npm.pkg.github.com/
-      - run: npm publish
+          target_branch: gh-pages
+          build_dir: dist
         env:
-          NODE_AUTH_TOKEN: ${{secrets.my_token}}
+          GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
