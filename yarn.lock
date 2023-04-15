@@ -157,6 +157,11 @@ concat-map@0.0.1:
   resolved "https://registry.npmmirror.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==
 
+dat.gui@^0.7.9:
+  version "0.7.9"
+  resolved "https://registry.npmmirror.com/dat.gui/-/dat.gui-0.7.9.tgz#860cab06053b028e327820eabdf25a13cf07b17e"
+  integrity sha512-sCNc1OHobc+Erc1HqiswYgHdVNpSJUlk/Hz8vzOCsER7rl+oF/4+v8GXFUyCgtXpoCX6+bnmg07DedLvBLwYKQ==
+
 email-addresses@^5.0.0:
   version "5.0.0"
   resolved "https://registry.npmmirror.com/email-addresses/-/email-addresses-5.0.0.tgz#7ae9e7f58eef7d5e3e2c2c2d3ea49b78dc854fa6"

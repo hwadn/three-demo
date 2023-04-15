@@ -8,6 +8,8 @@ import { cube, animate as cubeAnimate } from './demos/cube'
 import { line } from './demos/lines'
 import { createText } from './demos/text'
 
+import * as dat from 'dat.gui'
+
 // 创建场景
 const scene = new THREE.Scene()
 
@@ -21,6 +23,9 @@ scene.add(axesHelper)
 // // 添加物体
 scene.add(cube)
 scene.add(line)
+
+// 调试
+const gui = new dat.GUI()
 
 // 渲染
 const renderer = new THREE.WebGLRenderer()
@@ -81,6 +86,9 @@ fontLoader.load(
 		const textMesh = createText('my three.js demo', font)
 		textMesh.position.set(50, 300, 0)
 		scene.add(textMesh)
+		gui.add(textMesh.position, 'x').min(-200).max(200).name('文本x')
+		gui.add(textMesh.position, 'y').min(-200).max(200).name('文本y')
+		gui.add(textMesh.position, 'z').min(-200).max(200).name('文本z')
 	}
 )
 
