@@ -18,6 +18,23 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 camera.position.set(0, 0, 600)
 camera.lookAt(0, 0, 0)
 
+// 自创建几何体
+for (let i = 0; i < 50; i = i + 2) {
+	const geometry = new THREE.BufferGeometry()
+	const vertices = new Float32Array([
+		-i, -i, i,
+		i, -i, i,
+		i, i, i,
+		i, i, i,
+		-i, i, i,
+		-i, -i, i
+	])
+	const material = new THREE.MeshBasicMaterial({ color: 0xffff00 })
+	geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3))
+	const mesh = new THREE.Mesh(geometry, material)
+	scene.add(mesh)
+}
+
 // 添加坐标轴
 scene.add(axesHelper)
 // // 添加物体
@@ -76,6 +93,11 @@ window.addEventListener('dblclick', () => {
 // 灯光
 const light = new THREE.AmbientLight(0xffffff)
 scene.add(light)
+
+const pointLight = new THREE.PointLight(0xffffff, 0.5)
+pointLight.position.set(400, 400, 400)
+pointLight.color.setHSL(255, 255, 255)
+scene.add(pointLight)
 
 // 添加文本
 const fontLoader = new FontLoader()
