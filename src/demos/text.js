@@ -1,17 +1,17 @@
 import * as THREE from 'three'
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js'
 
-export const createText = (text, font) => {
+export const createText = (text, font, size) => {
 	const geometry = new TextGeometry(text, {
 		font,
-		size: 20,
+		size,
 		height: 0.2,
 		curveSegments: 12,
 		bevelEnabled: true,
-		bevelThickness: 0.03,
-		bevelSize: 0.02,
+		bevelThickness: 0.01,
+		bevelSize: 0.01,
 		bevelOffset: 0,
-		bevelSegments: 5,
+		bevelSegments: 2,
 	})
 
 	const material = new THREE.MeshBasicMaterial({ color: 'aqua' })

@@ -4,41 +4,47 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 
 import { axesHelper } from './helpers/axesHelper'
-import { cube, animate as cubeAnimate } from './demos/cube'
-import { line } from './demos/lines'
+import { generateCube } from './demos/cube'
+import { generateLine } from './demos/lines'
 import { createText } from './demos/text'
 
 import * as dat from 'dat.gui'
+
+const size = 8
 
 // 创建场景
 const scene = new THREE.Scene()
 
 // 相机
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight)
-camera.position.set(0, 0, 600)
+camera.position.set(0, 0, size)
 camera.lookAt(0, 0, 0)
 
 // 自创建几何体
-for (let i = 0; i < 50; i = i + 2) {
-	const geometry = new THREE.BufferGeometry()
-	const vertices = new Float32Array([
-		-i, -i, i,
-		i, -i, i,
-		i, i, i,
-		i, i, i,
-		-i, i, i,
-		-i, -i, i
-	])
-	const material = new THREE.MeshBasicMaterial({ color: 0xffff00 })
-	geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3))
-	const mesh = new THREE.Mesh(geometry, material)
-	scene.add(mesh)
-}
+const width = 20
+const length = 30
+const depth = -4
+const geometry = new THREE.BufferGeometry()
+const vertices = new Float32Array([
+	width, depth, -length,
+	-width, depth, -length,
+	-width, depth, length,
+	-width, depth, length,
+	width, depth, length,
+	width, depth, -length,
+])
+const doorTexture = new THREE.TextureLoader().load('public/floor.jpeg')
+const material = new THREE.MeshBasicMaterial({ map: doorTexture })
+geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3))
+const mesh = new THREE.Mesh(geometry, material)
+scene.add(mesh)
 
 // 添加坐标轴
-scene.add(axesHelper)
+scene.add(axesHelper(size))
 // // 添加物体
+const { cube, animate: cubeAnimate } = generateCube(2)
 scene.add(cube)
+const line = generateLine(size)
 scene.add(line)
 
 // 调试
@@ -66,7 +72,7 @@ const animate = (time) => {
 	prevTime = time
 	// 位移多少/秒
 	const speed = diff / 1000
-	cubeAnimate(speed)
+	cubeAnimate(speed, size * 3)
 	controls.update();
 	renderer.render(scene, camera)
 }
@@ -91,11 +97,11 @@ window.addEventListener('dblclick', () => {
 })
 
 // 灯光
-const light = new THREE.AmbientLight(0xffffff)
+const light = new THREE.AmbientLight(0xffffff, 0.4)
 scene.add(light)
 
-const pointLight = new THREE.PointLight(0xffffff, 0.5)
-pointLight.position.set(400, 400, 400)
+const pointLight = new THREE.PointLight(0xffffff, 0.8)
+pointLight.position.set(size, size, size)
 pointLight.color.setHSL(255, 255, 255)
 scene.add(pointLight)
 
@@ -105,19 +111,19 @@ fontLoader.load(
 	'node_modules/three/examples/fonts/droid/droid_sans_regular.typeface.json',
 	// called when the font has loaded
 	(font) => {
-		const textMesh = createText('my three.js demo', font)
-		textMesh.position.set(50, 300, 0)
+		const textMesh = createText('my three.js demo', font, 0.5)
+		textMesh.position.set(size / 2, size, 0)
 		scene.add(textMesh)
-		gui.add(textMesh.position, 'x').min(-200).max(200).name('文本x')
-		gui.add(textMesh.position, 'y').min(-200).max(200).name('文本y')
-		gui.add(textMesh.position, 'z').min(-200).max(200).name('文本z')
+		gui.add(textMesh.position, 'x').min(-size).max(size).name('文本x')
+		gui.add(textMesh.position, 'y').min(-size).max(size).name('文本y')
+		gui.add(textMesh.position, 'z').min(-size).max(size).name('文本z')
 	}
 )
 
 // 加载3d模型
 const loader = new GLTFLoader()
 loader.load(
-	'public/sea_keep_lonely_watcher/scene.gltf',
+	'public/chevrolet_cruze/scene.gltf',
 	gltf => {
 		scene.add(gltf.scene)
 	},
