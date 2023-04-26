@@ -1,22 +1,25 @@
 import * as THREE from 'three'
 
 // 创建物体
-const geometry = new THREE.BoxGeometry(10, 10, 10)
-const material = new THREE.MeshBasicMaterial({ color: 0xffff00 })
-const cube = new THREE.Mesh(geometry, material)
+const generateCube = (size) => {
+	const geometry = new THREE.BoxGeometry(size, size, size)
+	const material = new THREE.MeshBasicMaterial({ color: 0xffff00 })
+	const cube = new THREE.Mesh(geometry, material)
 
-
-// 动画
-const animate = (speed) => {
-	cube.rotation.x = 60 * speed
-	cube.position.y += 100 * speed
-
-	if (cube.position.y >= 600) {
-		cube.position.y = 0
+	const animate = (speed, top) => {
+		const segment = top / 5
+		cube.rotation.x = segment * speed
+		cube.rotation.x = segment * speed
+		cube.position.y += segment * speed
+	
+		if (cube.position.y >= top) {
+			cube.position.y = 0
+		}
 	}
+
+	return { cube, animate }
 }
 
 export {
-	cube,
-	animate
+	generateCube
 }

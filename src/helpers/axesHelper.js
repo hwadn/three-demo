@@ -1,3 +1,3 @@
 import * as THREE from 'three'
 
-export const axesHelper = new THREE.AxesHelper(600)
+export const axesHelper = (size) => new THREE.AxesHelper(size * 3)
